@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://drooqsvk2u7us"]
+
+[ext_resource type="Script" uid="uid://qjud1fkpjgww" path="res://grid/cell_grid/cell_grid.gd" id="1_agjni"]
+[ext_resource type="Script" uid="uid://d3rknkb2c67bb" path="res://grid/grid_holder.gd" id="1_nvyyp"]
+[ext_resource type="PackedScene" uid="uid://dqfkfo3tt1mbg" path="res://grid/cell_grid/cell/cell.tscn" id="2_nvyyp"]
+
+[node name="GridHolder" type="Control" node_paths=PackedStringArray("timer", "cell_grid")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nvyyp")
+timer = NodePath("Timer")
+cell_grid = NodePath("GridRatioifier/CellGrid")
+
+[node name="GridRatioifier" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CellGrid" type="GridContainer" parent="GridRatioifier"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+script = ExtResource("1_agjni")
+cell_scene = ExtResource("2_nvyyp")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
