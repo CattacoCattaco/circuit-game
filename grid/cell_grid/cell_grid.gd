@@ -32,16 +32,25 @@ func load_grid() -> void:
 			cells.append(cell)
 			
 			var end: int = grid_size - 1
+			var middle: int = end >> 1
 			
 			match [x, y]:
 				[0, 0]:
-					cell.set_tile(Vector2i(0, 14))
+					cell.set_tile(Vector2i(0, 17))
 				[end, 0]:
-					cell.set_tile(Vector2i(1, 14))
+					cell.set_tile(Vector2i(1, 17))
 				[end, end]:
-					cell.set_tile(Vector2i(2, 14))
+					cell.set_tile(Vector2i(2, 17))
 				[0, end]:
-					cell.set_tile(Vector2i(3, 14))
+					cell.set_tile(Vector2i(3, 17))
+				[middle, 0]:
+					cell.set_tile(Vector2i(0, 12))
+				[middle, end]:
+					cell.set_tile(Vector2i(2, 12))
+				[0, middle]:
+					cell.set_tile(Vector2i(0, 8))
+				[end, middle]:
+					cell.set_tile(Vector2i(2, 8))
 				[_, 0]:
 					cell.set_tile(Vector2i(2, 13))
 				[_, end]:
@@ -51,7 +60,7 @@ func load_grid() -> void:
 				[end, _]:
 					cell.set_tile(Vector2i(1, 10))
 				[_, _]:
-					cell.set_tile(Vector2i(2, 7))
+					cell.set_tile(Vector2i(0, 0))
 
 
 func get_cell(x: int, y: int) -> Cell:
