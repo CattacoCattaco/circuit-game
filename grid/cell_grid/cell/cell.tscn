@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqfkfo3tt1mbg"]
+[gd_scene load_steps=6 format=3 uid="uid://dqfkfo3tt1mbg"]
 
 [ext_resource type="Script" uid="uid://pra8a8xdkj72" path="res://grid/cell_grid/cell/cell.gd" id="1_yh0nt"]
 [ext_resource type="Texture2D" uid="uid://dvvkhqe45dru4" path="res://grid/cell_grid/cell/tiles_unpowered.png" id="2_wwvik"]
+[ext_resource type="Texture2D" uid="uid://x88y7cj8aqww" path="res://grid/cell_grid/cell/tile_frames.png" id="3_ih3ws"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ih3ws"]
 atlas = ExtResource("2_wwvik")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgt2l"]
+atlas = ExtResource("3_ih3ws")
 region = Rect2(0, 0, 9, 9)
 
 [node name="Cell" type="ColorRect" node_paths=PackedStringArray("pixel_holder")]
@@ -13,6 +18,7 @@ size_flags_vertical = 3
 color = Color(0.55, 0.55, 0.55, 1)
 script = ExtResource("1_yh0nt")
 tiles = SubResource("AtlasTexture_ih3ws")
+frames = SubResource("AtlasTexture_kgt2l")
 pixel_holder = NodePath("PixelHolder")
 
 [node name="PixelHolder" type="GridContainer" parent="."]

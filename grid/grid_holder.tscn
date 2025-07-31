@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://drooqsvk2u7us"]
+[gd_scene load_steps=5 format=3 uid="uid://drooqsvk2u7us"]
 
 [ext_resource type="Script" uid="uid://qjud1fkpjgww" path="res://grid/cell_grid/cell_grid.gd" id="1_agjni"]
 [ext_resource type="Script" uid="uid://d3rknkb2c67bb" path="res://grid/grid_holder.gd" id="1_nvyyp"]
 [ext_resource type="PackedScene" uid="uid://dqfkfo3tt1mbg" path="res://grid/cell_grid/cell/cell.tscn" id="2_nvyyp"]
+[ext_resource type="Resource" uid="uid://d3otbrbticoug" path="res://levels/level_0.tres" id="4_nvyyp"]
 
 [node name="GridHolder" type="Control" node_paths=PackedStringArray("timer", "cell_grid")]
 layout_mode = 3
@@ -30,6 +31,7 @@ theme_override_constants/v_separation = 0
 columns = 3
 script = ExtResource("1_agjni")
 cell_scene = ExtResource("2_nvyyp")
+level = ExtResource("4_nvyyp")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

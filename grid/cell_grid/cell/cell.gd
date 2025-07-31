@@ -2,6 +2,7 @@ class_name Cell
 extends ColorRect
 
 @export var tiles: AtlasTexture
+@export var frames: AtlasTexture
 @export var pixel_holder: GridContainer
 
 var pixels: Array[ColorRect] = []
@@ -11,6 +12,9 @@ var cell_grid: CellGrid
 var powered: bool = false
 
 var pos: Vector2i
+
+var tile: Vector2i
+var frame: Vector2i
 
 
 func _ready() -> void:
@@ -22,9 +26,14 @@ func _ready() -> void:
 		
 		pixel_holder.add_child(new_pixel)
 		pixels.append(new_pixel)
+	
+	set_tile(Vector2i(2, 7))
+	set_frame(Vector2i(2, 0))
 
 
 func set_tile(new_tile_pos: Vector2i) -> void:
+	tile = new_tile_pos
+	
 	if powered:
 		tiles.atlas = preload("res://grid/cell_grid/cell/tiles_powered.png")
 	else:
@@ -36,6 +45,21 @@ func set_tile(new_tile_pos: Vector2i) -> void:
 	for x in range(9):
 		for y in range(9):
 			set_pixel(x, y, desired_image.get_pixel(x, y))
+
+
+func set_frame(new_frame_pos: Vector2i) -> void:
+	frame = new_frame_pos
+	
+	set_tile(tile)
+	
+	frames.region.position = (new_frame_pos * 9) as Vector2
+	var desired_image: Image = frames.get_image()
+	
+	for x in range(9):
+		for y in range(9):
+			var pixel_color: Color = desired_image.get_pixel(x, y)
+			if pixel_color.a != 0:
+				set_pixel(x, y, pixel_color)
 
 
 func set_pixel(x: int, y: int, pixel_color: Color) -> void:
