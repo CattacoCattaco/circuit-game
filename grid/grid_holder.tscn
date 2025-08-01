@@ -30,7 +30,6 @@ theme_override_constants/v_separation = 0
 columns = 3
 script = ExtResource("1_agjni")
 cell_scene = ExtResource("2_nvyyp")
-current_level_index = 6
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
