@@ -1,24 +1,24 @@
 class_name Level
 extends Resource
 
-enum WALL {
+enum Wall {
 	TOP,
 	LEFT,
 	BOTTOM,
 	RIGHT
 }
 
-enum WALL_COLOR {
+enum WallColor {
 	RED,
 	BLUE,
 	GREY,
 }
 
-@export var wall_colors: Array[WALL_COLOR] = [
-	WALL_COLOR.RED,
-	WALL_COLOR.BLUE,
-	WALL_COLOR.RED,
-	WALL_COLOR.BLUE,
+@export var wall_colors: Array[WallColor] = [
+	WallColor.RED,
+	WallColor.BLUE,
+	WallColor.RED,
+	WallColor.BLUE,
 ]
 
 @export var red_inverted: bool = false
@@ -27,11 +27,13 @@ enum WALL_COLOR {
 @export var grid_size: int = 7
 
 @export var fixed_tiles: Dictionary[Vector2i, Vector2i] = {}
+@export var given_tiles: Array[Vector2i] = []
 
 
-func _init(p_wall_colors: Array[WALL_COLOR] = [WALL_COLOR.RED, WALL_COLOR.BLUE, WALL_COLOR.RED,
-		WALL_COLOR.BLUE], p_red_inverted: bool = false, p_blue_inverted: bool = false,
-		p_grid_size: int = 7, p_fixed_tiles: Dictionary[Vector2i, Vector2i] = {}) -> void:
+func _init(p_wall_colors: Array[WallColor] = [WallColor.RED, WallColor.BLUE, WallColor.RED,
+		WallColor.BLUE], p_red_inverted: bool = false, p_blue_inverted: bool = false,
+		p_grid_size: int = 7, p_fixed_tiles: Dictionary[Vector2i, Vector2i] = {},
+		p_given_tiles: Array[Vector2i] = []) -> void:
 	wall_colors = p_wall_colors
 	
 	red_inverted = p_red_inverted
@@ -40,3 +42,4 @@ func _init(p_wall_colors: Array[WALL_COLOR] = [WALL_COLOR.RED, WALL_COLOR.BLUE, 
 	grid_size = p_grid_size
 	
 	fixed_tiles = p_fixed_tiles
+	given_tiles = p_given_tiles
