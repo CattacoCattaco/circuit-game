@@ -105,6 +105,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			elif area == Area.PLACEABLE_ARROWS:
 				powered = true
 				set_tile(tile)
+				
+				if tile == Tiles.LEFT_ARROW:
+					cell_grid.prev_placeable_page()
+				elif tile == Tiles.RIGHT_ARROW:
+					cell_grid.next_placeable_page()
 			elif area == Area.SUBMIT_CHECK:
 				if powered:
 					cell_grid.advance()

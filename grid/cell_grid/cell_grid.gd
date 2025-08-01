@@ -13,6 +13,9 @@ var placeable_cells: Array[Cell] = []
 var placeable_tiles: Array[Vector2i] = []
 var placeable_tile_page: int = 0
 
+var left_placeable_arrow: Cell
+var right_placeable_arrow: Cell
+
 var selected_placeable_cell: Cell
 
 var placed_cells: Dictionary[Vector2i, Cell] = {}
@@ -81,11 +84,15 @@ func load_grid() -> void:
 			
 			match [adjusted_x, adjusted_y]:
 				[-1, placeable_row]:
-					cell.set_tile(Tiles.LEFT_ARROW)
+					cell.set_tile(Tiles.BLANK)
 					cell.area = Cell.Area.PLACEABLE_ARROWS
+					
+					left_placeable_arrow = cell
 				[placeable_row, placeable_row]:
 					cell.set_tile(Tiles.RIGHT_ARROW)
 					cell.area = Cell.Area.PLACEABLE_ARROWS
+					
+					right_placeable_arrow = cell
 				[placeable_row, middle]:
 					cell.set_tile(Tiles.SUBMIT_CHECK)
 					cell.area = Cell.Area.SUBMIT_CHECK
@@ -455,10 +462,35 @@ func remove_placeable_cell(cell: Cell) -> void:
 
 func display_placeable_tiles() -> void:
 	for i in len(placeable_cells):
-		if i < len(placeable_tiles):
-			placeable_cells[i].set_tile(placeable_tiles[i])
+		var placeable_tiles_index: int = i + placeable_tile_page * len(placeable_cells)
+		if placeable_tiles_index < len(placeable_tiles):
+			placeable_cells[i].set_tile(placeable_tiles[placeable_tiles_index])
 		else:
 			placeable_cells[i].set_tile(Tiles.EMPTY_CELL)
+
+
+func next_placeable_page() -> void:
+	var page_count: int = ceili(len(placeable_tiles) / (len(placeable_cells) as float))
+	
+	if placeable_tile_page < page_count - 1:
+		left_placeable_arrow.set_tile(Tiles.LEFT_ARROW)
+		
+		placeable_tile_page += 1
+		display_placeable_tiles()
+		
+		if placeable_tile_page == page_count - 1:
+			right_placeable_arrow.set_tile(Tiles.BLANK)
+
+
+func prev_placeable_page() -> void:
+	if placeable_tile_page > 0:
+		right_placeable_arrow.set_tile(Tiles.RIGHT_ARROW)
+		
+		placeable_tile_page -= 1
+		display_placeable_tiles()
+		
+		if placeable_tile_page == 0:
+			left_placeable_arrow.set_tile(Tiles.BLANK)
 
 
 func check_power(tiles_removed: bool = false) -> void:
