@@ -125,6 +125,7 @@ func _on_gui_input(event: InputEvent) -> void:
 					cell_grid.placed_cells.erase(board_pos)
 					cell_grid.add_tile_to_placeables(tile)
 					set_tile(Tiles.EMPTY_CELL)
+					powered = false
 					cell_grid.check_power(true)
 
 

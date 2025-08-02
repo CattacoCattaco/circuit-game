@@ -1,6 +1,8 @@
 class_name CellGrid
 extends GridContainer
 
+@export var grid_holder: GridHolder
+
 @export var cell_scene: PackedScene
 
 @export var current_level_index: int
@@ -27,6 +29,8 @@ var total_LED_count: int = 0
 
 var submit_check: Cell
 
+var level_indicator_cells: Array[Cell] = []
+
 
 func load_grid() -> void:
 	for cell in cells:
@@ -41,6 +45,7 @@ func load_grid() -> void:
 	side_cells = {}
 	lit_LEDS = []
 	total_LED_count = 0
+	level_indicator_cells = []
 	
 	columns = levels[current_level_index].grid_size + 2
 	
@@ -83,6 +88,30 @@ func load_grid() -> void:
 			cells.append(cell)
 			
 			match [adjusted_x, adjusted_y]:
+				[-1, -1]:
+					cell.set_tile(Tiles.CHAR_L)
+					level_indicator_cells.append(cell)
+				[0, -1]:
+					cell.set_tile(Tiles.CHAR_E)
+					level_indicator_cells.append(cell)
+				[1, -1]:
+					cell.set_tile(Tiles.CHAR_V)
+					level_indicator_cells.append(cell)
+				[2, -1]:
+					cell.set_tile(Tiles.CHAR_E)
+					level_indicator_cells.append(cell)
+				[3, -1]:
+					cell.set_tile(Tiles.CHAR_L)
+					level_indicator_cells.append(cell)
+				[4, -1]:
+					cell.set_tile(Tiles.CHAR_COLON)
+					level_indicator_cells.append(cell)
+				[5, -1]:
+					cell.set_tile(Tiles.CHAR_0)
+					level_indicator_cells.append(cell)
+				[6, -1]:
+					cell.set_tile(Tiles.CHAR_0)
+					level_indicator_cells.append(cell)
 				[-1, placeable_row]:
 					cell.set_tile(Tiles.BLANK)
 					cell.area = Cell.Area.PLACEABLE_ARROWS
@@ -358,12 +387,16 @@ func load_grid() -> void:
 						if fixed_tiles[Vector2i(adjusted_x, adjusted_y)] in Tiles.LED_TILES:
 							total_LED_count += 1
 	
+	if len(levels[current_level_index].given_tiles) < len(placeable_cells):
+		right_placeable_arrow.set_tile(Tiles.BLANK)
+	
 	for tile in levels[current_level_index].given_tiles:
 		if tile in Tiles.LED_TILES:
 			total_LED_count += 1
 	
 	placeable_tiles = levels[current_level_index].given_tiles.duplicate()
 	display_placeable_tiles()
+	update_level_text()
 	
 	check_power()
 
@@ -445,9 +478,8 @@ func get_cell_by_vec(vec: Vector2i) -> Cell:
 
 
 func add_tile_to_placeables(tile: Vector2i) -> void:
-	var next_placeable_cell: Cell = placeable_cells[len(placeable_tiles)]
 	placeable_tiles.append(tile)
-	next_placeable_cell.set_tile(tile)
+	display_placeable_tiles()
 
 
 func remove_placeable_cell(cell: Cell) -> void:
@@ -503,6 +535,11 @@ func check_power(tiles_removed: bool = false) -> void:
 				
 				cell.powered = false
 				cell.set_tile(cell.tile)
+		
+		for pos in side_cells:
+			var cell: Cell = side_cells[pos]
+			cell.powered = false
+			cell.set_tile(cell.tile)
 	
 	for pos in placed_cells:
 		check_power_spread(pos)
@@ -513,6 +550,7 @@ func check_power(tiles_removed: bool = false) -> void:
 	if len(lit_LEDS) == total_LED_count:
 		submit_check.powered = true
 		submit_check.set_tile(submit_check.tile)
+		grid_holder.audio_manager.play_success_sound()
 	elif submit_check.powered:
 		submit_check.powered = false
 		submit_check.set_tile(submit_check.tile)
@@ -562,3 +600,11 @@ func advance() -> void:
 	if current_level_index + 1 < len(levels):
 		current_level_index += 1
 		load_grid()
+		update_level_text()
+
+
+func update_level_text() -> void:
+	var first_digit: int = current_level_index / 10
+	var second_digit: int = current_level_index % 10
+	level_indicator_cells[6].set_tile(Tiles.DIGITS[first_digit])
+	level_indicator_cells[7].set_tile(Tiles.DIGITS[second_digit])

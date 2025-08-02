@@ -1,8 +1,8 @@
 class_name GridHolder
 extends Control
 
-@export var timer: Timer
 @export var cell_grid: CellGrid
+@export var audio_manager: AudioManager
 
 
 func _ready() -> void:
