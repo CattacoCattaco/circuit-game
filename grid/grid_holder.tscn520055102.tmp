@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://drooqsvk2u7us"]
+
+[ext_resource type="Script" uid="uid://d3rknkb2c67bb" path="res://grid/grid_holder.gd" id="1_nvyyp"]
+[ext_resource type="Script" uid="uid://cpkwnqwlbx1u0" path="res://grid/cell_grid/level_cell_grid.gd" id="2_7dmfh"]
+[ext_resource type="PackedScene" uid="uid://dqfkfo3tt1mbg" path="res://grid/cell_grid/cell/level_cell/level_cell.tscn" id="2_nvyyp"]
+[ext_resource type="Script" uid="uid://dpsonj3nalllc" path="res://grid/cell_grid/ui_cell_grid.gd" id="4_7dmfh"]
+[ext_resource type="AudioStream" uid="uid://dagv1yrm0ybei" path="res://sound/success.wav" id="4_nvyyp"]
+[ext_resource type="Script" uid="uid://dw3worglq4gfh" path="res://sound/audio_manager.gd" id="4_xqidj"]
+[ext_resource type="AudioStream" uid="uid://bt2a4nv40qx17" path="res://sound/shifting_flow.wav" id="5_jwvtr"]
+[ext_resource type="AudioStream" uid="uid://clsguwqyae6a6" path="res://sound/mobius_volts.wav" id="7_edipr"]
+
+[node name="GridHolder" type="Control" node_paths=PackedStringArray("cell_grid", "audio_manager")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nvyyp")
+cell_grid = NodePath("LevelRatioifier/LevelCellGrid")
+audio_manager = NodePath("AudioManager")
+
+[node name="LevelRatioifier" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LevelCellGrid" type="GridContainer" parent="LevelRatioifier" node_paths=PackedStringArray("grid_holder")]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+script = ExtResource("2_7dmfh")
+grid_holder = NodePath("../..")
+cell_scene = ExtResource("2_nvyyp")
+
+[node name="UIScreenRatioifier" type="AspectRatioContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UICellGrid" type="GridContainer" parent="UIScreenRatioifier" node_paths=PackedStringArray("grid_holder")]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+script = ExtResource("4_7dmfh")
+grid_holder = NodePath("../..")
+cell_scene = ExtResource("2_nvyyp")
+
+[node name="AudioManager" type="Node" parent="." node_paths=PackedStringArray("timer", "success_player", "track_players")]
+script = ExtResource("4_xqidj")
+timer = NodePath("Timer")
+success_player = NodePath("SuccessPlayer")
+track_players = [NodePath("ShiftingFlowPlayer"), NodePath("MobiusVoltsPlayer")]
+
+[node name="SuccessPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("4_nvyyp")
+volume_db = -10.0
+
+[node name="ShiftingFlowPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("5_jwvtr")
+
+[node name="MobiusVoltsPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("7_edipr")
+volume_db = -5.0
+
+[node name="Timer" type="Timer" parent="AudioManager"]
+wait_time = 0.1
+one_shot = true

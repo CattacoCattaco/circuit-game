@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://drnsiun14j6su"]
+
+[ext_resource type="Script" uid="uid://cut4byfd3mwg2" path="res://grid/cell_grid/cell/ui_cell/ui_cell.gd" id="1_5orgl"]
+[ext_resource type="Texture2D" uid="uid://bohed1gvqb3sn" path="res://grid/cell_grid/cell/ui_cell/title.png" id="2_xeb3c"]
+[ext_resource type="Texture2D" uid="uid://dyki464bv24em" path="res://grid/cell_grid/cell/ui_cell/ui_frames_powered.png" id="3_tperf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7lke"]
+atlas = ExtResource("3_tperf")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xeb3c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeb3c"]
+atlas = SubResource("CompressedTexture2D_xeb3c")
+region = Rect2(0, 0, 9, 9)
+
+[node name="UICell" type="ColorRect" node_paths=PackedStringArray("pixel_holder")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.815686, 0.815686, 0.815686, 1)
+script = ExtResource("1_5orgl")
+title_texture = ExtResource("2_xeb3c")
+frames = SubResource("AtlasTexture_f7lke")
+tiles = SubResource("AtlasTexture_xeb3c")
+pixel_holder = NodePath("PixelHolder")
+
+[node name="PixelHolder" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 9

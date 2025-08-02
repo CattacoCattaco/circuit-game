@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqfkfo3tt1mbg"]
+
+[ext_resource type="Script" uid="uid://pra8a8xdkj72" path="res://grid/cell_grid/cell/level_cell/level_cell.gd" id="1_yh0nt"]
+[ext_resource type="Texture2D" uid="uid://x88y7cj8aqww" path="res://grid/cell_grid/cell/level_cell/tile_frames.png" id="2_44twx"]
+[ext_resource type="Texture2D" uid="uid://dvvkhqe45dru4" path="res://grid/cell_grid/cell/level_cell/tiles_unpowered.png" id="2_wwvik"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djgse"]
+atlas = ExtResource("2_44twx")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih3ws"]
+atlas = ExtResource("2_wwvik")
+region = Rect2(0, 0, 9, 9)
+
+[node name="Cell" type="ColorRect" node_paths=PackedStringArray("pixel_holder")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.55, 0.55, 0.55, 1)
+script = ExtResource("1_yh0nt")
+frames = SubResource("AtlasTexture_djgse")
+tiles = SubResource("AtlasTexture_ih3ws")
+pixel_holder = NodePath("PixelHolder")
+
+[node name="PixelHolder" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 9
