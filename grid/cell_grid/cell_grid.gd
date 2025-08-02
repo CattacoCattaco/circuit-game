@@ -493,6 +493,14 @@ func remove_placeable_cell(cell: Cell) -> void:
 
 
 func display_placeable_tiles() -> void:
+	var page_count: int = ceili(len(placeable_tiles) / (len(placeable_cells) as float))
+	
+	if placeable_tile_page == page_count - 1:
+		right_placeable_arrow.set_tile(Tiles.BLANK)
+	
+	if placeable_tile_page == 0:
+		left_placeable_arrow.set_tile(Tiles.BLANK)
+	
 	for i in len(placeable_cells):
 		var placeable_tiles_index: int = i + placeable_tile_page * len(placeable_cells)
 		if placeable_tiles_index < len(placeable_tiles):
@@ -502,6 +510,9 @@ func display_placeable_tiles() -> void:
 
 
 func next_placeable_page() -> void:
+	selected_placeable_cell.deselect()
+	selected_placeable_cell = null
+	
 	var page_count: int = ceili(len(placeable_tiles) / (len(placeable_cells) as float))
 	
 	if placeable_tile_page < page_count - 1:
@@ -509,20 +520,17 @@ func next_placeable_page() -> void:
 		
 		placeable_tile_page += 1
 		display_placeable_tiles()
-		
-		if placeable_tile_page == page_count - 1:
-			right_placeable_arrow.set_tile(Tiles.BLANK)
 
 
 func prev_placeable_page() -> void:
+	selected_placeable_cell.deselect()
+	selected_placeable_cell = null
+	
 	if placeable_tile_page > 0:
 		right_placeable_arrow.set_tile(Tiles.RIGHT_ARROW)
 		
 		placeable_tile_page -= 1
 		display_placeable_tiles()
-		
-		if placeable_tile_page == 0:
-			left_placeable_arrow.set_tile(Tiles.BLANK)
 
 
 func check_power(tiles_removed: bool = false) -> void:

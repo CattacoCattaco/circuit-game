@@ -91,6 +91,9 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if area == Area.PLACEABLES:
+				if tile == Tiles.EMPTY_CELL:
+					return
+				
 				if frame == Frames.EMPTY:
 					select()
 				else:
