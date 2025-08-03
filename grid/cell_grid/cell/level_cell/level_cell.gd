@@ -112,6 +112,12 @@ func _on_gui_input(event: InputEvent) -> void:
 					cell_grid.add_tile_to_placeables(tile)
 					set_tile(LevelTiles.EMPTY_CELL)
 					powered = false
+					
+					if self in cell_grid.lit_LEDS:
+						cell_grid.lit_LEDS.erase(self)
+					elif self in cell_grid.lit_evil_LEDS:
+						cell_grid.lit_evil_LEDS.erase(self)
+					
 					cell_grid.check_power(true)
 
 
@@ -139,25 +145,25 @@ func get_connection_dirs() -> Array[Vector2i]:
 	match tile:
 		LevelTiles.EMPTY_CELL, LevelTiles.BLOCK:
 			return []
-		LevelTiles.L_BATTERY, LevelTiles.L_LED:
+		LevelTiles.L_BATTERY, LevelTiles.L_LED, LevelTiles.L_EVIL_LED:
 			return [Vector2i(-1, 0)]
-		LevelTiles.T_BATTERY, LevelTiles.T_LED:
+		LevelTiles.T_BATTERY, LevelTiles.T_LED, LevelTiles.T_EVIL_LED:
 			return [Vector2i(0, -1)]
-		LevelTiles.R_BATTERY, LevelTiles.R_LED:
+		LevelTiles.R_BATTERY, LevelTiles.R_LED, LevelTiles.R_EVIL_LED:
 			return [Vector2i(1, 0)]
-		LevelTiles.B_BATTERY, LevelTiles.B_LED:
+		LevelTiles.B_BATTERY, LevelTiles.B_LED, LevelTiles.B_EVIL_LED:
 			return [Vector2i(0, 1)]
-		LevelTiles.TB_STRAIGHT, LevelTiles.TB_LED:
+		LevelTiles.TB_STRAIGHT, LevelTiles.TB_LED, LevelTiles.TB_EVIL_LED:
 			return [Vector2i(0, -1), Vector2i(0, 1)]
-		LevelTiles.LR_STRAIGHT, LevelTiles.LR_LED:
+		LevelTiles.LR_STRAIGHT, LevelTiles.LR_LED, LevelTiles.LR_EVIL_LED:
 			return [Vector2i(-1, 0), Vector2i(1, 0)]
-		LevelTiles.TL_CORNER, LevelTiles.TL_LED:
+		LevelTiles.TL_CORNER, LevelTiles.TL_LED, LevelTiles.TL_EVIL_LED:
 			return [Vector2i(-1, 0), Vector2i(0, -1)]
-		LevelTiles.TR_CORNER, LevelTiles.TR_LED:
+		LevelTiles.TR_CORNER, LevelTiles.TR_LED, LevelTiles.TR_EVIL_LED:
 			return [Vector2i(1, 0), Vector2i(0, -1)]
-		LevelTiles.BR_CORNER, LevelTiles.BR_LED:
+		LevelTiles.BR_CORNER, LevelTiles.BR_LED, LevelTiles.BR_EVIL_LED:
 			return [Vector2i(1, 0), Vector2i(0, 1)]
-		LevelTiles.BL_CORNER, LevelTiles.BL_LED:
+		LevelTiles.BL_CORNER, LevelTiles.BL_LED, LevelTiles.BL_EVIL_LED:
 			return [Vector2i(-1, 0), Vector2i(0, 1)]
 		LevelTiles.NON_B_TEE:
 			return [Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0)]
@@ -167,7 +173,7 @@ func get_connection_dirs() -> Array[Vector2i]:
 			return [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0)]
 		LevelTiles.NON_R_TEE:
 			return [Vector2i(0, -1), Vector2i(-1, 0), Vector2i(0, 1)]
-		LevelTiles.ALL_BATTERY, LevelTiles.ALL_LED, LevelTiles.ALL_WIRE:
+		LevelTiles.ALL_BATTERY, LevelTiles.ALL_LED, LevelTiles.ALL_EVIL_LED, LevelTiles.ALL_WIRE:
 			return [Vector2i(-1, 0), Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1)]
 	
 	if tile in LevelTiles.POWERABLE_TOP_SIDES:

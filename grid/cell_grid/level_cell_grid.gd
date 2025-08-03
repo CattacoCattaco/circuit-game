@@ -18,6 +18,7 @@ var placed_cells: Dictionary[Vector2i, Cell] = {}
 var side_cells: Dictionary[Vector2i, Cell] = {}
 
 var lit_LEDS: Array[Cell] = []
+var lit_evil_LEDS: Array[Cell] = []
 
 var total_LED_count: int = 0
 
@@ -537,7 +538,10 @@ func check_power(tiles_removed: bool = false) -> void:
 			var cell: Cell = placed_cells[pos]
 			if not cell.is_power_source():
 				if cell in lit_LEDS:
+					print("removed lit LED")
 					lit_LEDS.erase(cell)
+				elif cell in lit_evil_LEDS:
+					lit_evil_LEDS.erase(cell)
 				
 				cell.powered = false
 				cell.set_tile(cell.tile)
@@ -553,7 +557,7 @@ func check_power(tiles_removed: bool = false) -> void:
 	for pos in side_cells:
 		check_power_spread(pos)
 	
-	if len(lit_LEDS) == total_LED_count:
+	if len(lit_LEDS) == total_LED_count and len(lit_evil_LEDS) == 0:
 		submit_check.powered = true
 		submit_check.set_tile(submit_check.tile)
 		grid_holder.audio_manager.play_success_sound()
@@ -586,7 +590,12 @@ func check_power_spread(pos: Vector2i) -> void:
 				
 				if (possible_connection.tile in LevelTiles.LED_TILES 
 						and not possible_connection in lit_LEDS):
+					print("added LED")
 					lit_LEDS.append(possible_connection)
+				elif (possible_connection.tile in LevelTiles.EVIL_LED_TILES 
+						and not possible_connection in lit_evil_LEDS):
+					lit_evil_LEDS.append(possible_connection)
+					grid_holder.audio_manager.play_fail_sound()
 				
 				check_power_spread(pos + dir)
 		elif pos + dir in side_cells:

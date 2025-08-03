@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Level" load_steps=2 format=3 uid="uid://c173bj4hwsvfc"]
+
+[ext_resource type="Script" uid="uid://b6pmwmy4nvbsb" path="res://levels/level.gd" id="1_4tbwp"]
+
+[resource]
+script = ExtResource("1_4tbwp")
+wall_colors = Array[int]([0, 1, 0, 1])
+red_inverted = false
+blue_inverted = false
+grid_size = 10
+fixed_tiles = Dictionary[Vector2i, Vector2i]({
+Vector2i(2, 2): Vector2i(0, 4),
+Vector2i(2, 5): Vector2i(1, 5),
+Vector2i(2, 7): Vector2i(3, 5),
+Vector2i(5, 4): Vector2i(0, 5),
+Vector2i(7, 4): Vector2i(1, 5),
+Vector2i(8, 3): Vector2i(1, 7)
+})
+given_tiles = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 0), Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 0), Vector2i(1, 0), Vector2i(1, 0), Vector2i(1, 0), Vector2i(3, 2), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)])
+metadata/_custom_type_script = "uid://b6pmwmy4nvbsb"

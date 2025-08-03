@@ -57,6 +57,34 @@ const LED_TILES: Array[Vector2i] = [
 	ALL_LED,
 ]
 
+const ALL_EVIL_LED := Vector2i(1, 34)
+const LR_EVIL_LED := Vector2i(2, 34)
+const TB_EVIL_LED := Vector2i(3, 34)
+
+const L_EVIL_LED := Vector2i(0, 35)
+const T_EVIL_LED := Vector2i(1, 35)
+const R_EVIL_LED := Vector2i(2, 35)
+const B_EVIL_LED := Vector2i(3, 35)
+
+const TL_EVIL_LED := Vector2i(0, 36)
+const TR_EVIL_LED := Vector2i(1, 36)
+const BR_EVIL_LED := Vector2i(2, 36)
+const BL_EVIL_LED := Vector2i(3, 36)
+
+const EVIL_LED_TILES: Array[Vector2i] = [
+	L_EVIL_LED,
+	T_EVIL_LED,
+	R_EVIL_LED,
+	B_EVIL_LED,
+	LR_EVIL_LED,
+	TB_EVIL_LED,
+	TL_EVIL_LED,
+	TR_EVIL_LED,
+	BR_EVIL_LED,
+	BL_EVIL_LED,
+	ALL_EVIL_LED,
+]
+
 const ALL_WIRE := Vector2i(0, 7)
 const BLOCK := Vector2i(1, 7)
 const EMPTY_CELL := Vector2i(2, 7)

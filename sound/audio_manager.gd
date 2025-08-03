@@ -3,6 +3,7 @@ extends Node
 
 @export var timer: Timer
 @export var success_player: AudioStreamPlayer
+@export var fail_player: AudioStreamPlayer
 @export var track_players: Array[AudioStreamPlayer]
 
 
@@ -17,6 +18,10 @@ func _ready() -> void:
 
 func play_success_sound() -> void:
 	success_player.play()
+
+
+func play_fail_sound() -> void:
+	fail_player.play()
 
 
 func play_track() -> void:

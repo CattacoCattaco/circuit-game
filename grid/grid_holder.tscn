@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://drooqsvk2u7us"]
+[gd_scene load_steps=12 format=3 uid="uid://drooqsvk2u7us"]
 
 [ext_resource type="Script" uid="uid://d3rknkb2c67bb" path="res://grid/grid_holder.gd" id="1_nvyyp"]
 [ext_resource type="Script" uid="uid://cpkwnqwlbx1u0" path="res://grid/cell_grid/level_cell_grid.gd" id="2_7dmfh"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://drnsiun14j6su" path="res://grid/cell_grid/cell/ui_cell/ui_cell.tscn" id="5_gej7j"]
 [ext_resource type="AudioStream" uid="uid://bt2a4nv40qx17" path="res://sound/shifting_flow.wav" id="5_jwvtr"]
 [ext_resource type="AudioStream" uid="uid://clsguwqyae6a6" path="res://sound/mobius_volts.wav" id="7_edipr"]
+[ext_resource type="AudioStream" uid="uid://evfgq1dl7rqh" path="res://sound/wrong.wav" id="8_yun4b"]
+[ext_resource type="AudioStream" uid="uid://cyt6ecnh7tr7o" path="res://sound/unwound.wav" id="11_yw5tk"]
 
 [node name="GridHolder" type="Control" node_paths=PackedStringArray("level_grid", "ui_grid", "audio_manager", "stall_timer")]
 layout_mode = 3
@@ -59,15 +61,20 @@ script = ExtResource("4_7dmfh")
 grid_holder = NodePath("../..")
 cell_scene = ExtResource("5_gej7j")
 
-[node name="AudioManager" type="Node" parent="." node_paths=PackedStringArray("timer", "success_player", "track_players")]
+[node name="AudioManager" type="Node" parent="." node_paths=PackedStringArray("timer", "success_player", "fail_player", "track_players")]
 script = ExtResource("4_xqidj")
 timer = NodePath("Timer")
 success_player = NodePath("SuccessPlayer")
-track_players = [NodePath("ShiftingFlowPlayer"), NodePath("MobiusVoltsPlayer")]
+fail_player = NodePath("FailPlayer")
+track_players = [NodePath("ShiftingFlowPlayer"), NodePath("MobiusVoltsPlayer"), NodePath("UnwoundPlayer")]
 
 [node name="SuccessPlayer" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("4_nvyyp")
 volume_db = -10.0
+
+[node name="FailPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("8_yun4b")
+volume_db = 2.0
 
 [node name="ShiftingFlowPlayer" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("5_jwvtr")
@@ -75,6 +82,10 @@ stream = ExtResource("5_jwvtr")
 [node name="MobiusVoltsPlayer" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource("7_edipr")
 volume_db = -5.0
+
+[node name="UnwoundPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("11_yw5tk")
+volume_db = -8.0
 
 [node name="Timer" type="Timer" parent="AudioManager"]
 wait_time = 0.1
