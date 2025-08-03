@@ -494,9 +494,13 @@ func display_placeable_tiles() -> void:
 	
 	if placeable_tile_page == page_count - 1:
 		right_placeable_arrow.set_tile(LevelTiles.BLANK)
+	else:
+		right_placeable_arrow.set_tile(LevelTiles.RIGHT_ARROW)
 	
 	if placeable_tile_page == 0:
 		left_placeable_arrow.set_tile(LevelTiles.BLANK)
+	else:
+		right_placeable_arrow.set_tile(LevelTiles.LEFT_ARROW)
 	
 	for i in len(placeable_cells):
 		var placeable_tiles_index: int = i + placeable_tile_page * len(placeable_cells)
@@ -514,8 +518,6 @@ func next_placeable_page() -> void:
 	var page_count: int = ceili(len(placeable_tiles) / (len(placeable_cells) as float))
 	
 	if placeable_tile_page < page_count - 1:
-		left_placeable_arrow.set_tile(LevelTiles.LEFT_ARROW)
-		
 		placeable_tile_page += 1
 		display_placeable_tiles()
 
@@ -526,8 +528,6 @@ func prev_placeable_page() -> void:
 		selected_placeable_cell = null
 	
 	if placeable_tile_page > 0:
-		right_placeable_arrow.set_tile(LevelTiles.RIGHT_ARROW)
-		
 		placeable_tile_page -= 1
 		display_placeable_tiles()
 
